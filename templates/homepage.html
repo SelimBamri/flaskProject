@@ -116,6 +116,7 @@
             </div>
         </div>
         <!-- Navbar & Hero End -->
+        <h2>Liste des vols</h2>
         {% for flight in flights %}
         <div class="custom-card" >
          <div class="d-inline-block bg-primary text-white fs-5 py-1 px-4 mb-4">{{ flight.airline }}</div>
@@ -132,6 +133,56 @@
         {% else %}
               <p>no records found</p>
         {% endfor %}
+                <!-- About Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="row g-3">
+                            <div class="col-6 text-start">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="{{ url_for('static',filename='img2/img1.jpg') }}">
+                            </div>
+                            <div class="col-6 text-start">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="{{ url_for('static',filename='img2/img2.jpg') }}" style="margin-top: 25%;">
+                            </div>
+                            <div class="col-6 text-end">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="{{ url_for('static',filename='img2/img3.jpg') }}">
+                            </div>
+                            <div class="col-6 text-end">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="{{ url_for('static',filename='img2/img4.jpg') }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">À propos</h5>
+                        <h1 class="mb-4">Bienvenue à <i class="fa fa-plane-departure me-3"></i>Fly Me Now</h1>
+                        <p class="mb-4">Bienvenue chez notre agence de voyage, votre compagnon idéal pour l'exploration du monde ! Que vous rêviez de vous émerveiller devant des paysages à couper le souffle, de vous immerger dans des cultures fascinantes ou de vous détendre sur des plages paradisiaques, nous sommes là pour transformer vos rêves en réalité.</p>
+                        <p class="mb-4"> Forts d'une expérience de plusieurs années dans l'industrie du voyage, nous nous engageons à vous offrir des expériences uniques et mémorables, adaptées à vos besoins et à vos préférences. </p>
+                        <div class="row g-4 mb-4">
+                            <div class="col-sm-6">
+                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">15</h1>
+                                    <div class="ps-4">
+                                        <p class="mb-0">Années</p>
+                                        <h6 class="text-uppercase mb-0">d'éxperience</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">1000</h1>
+                                    <div class="ps-4">
+                                        <p class="mb-0">Plus de</p>
+                                        <h6 class="text-uppercase mb-0">Utilisateurs</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About End -->
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container py-4">
@@ -191,7 +242,7 @@
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="{{url_for('.static', filename='s2/main.js')}}j"></script>
+    <script src="{{url_for('.static', filename='js2/main.js')}}j"></script>
 </body>
 
 </html>
