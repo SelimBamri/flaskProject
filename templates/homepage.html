@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Fly Me Now</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{url_for('.static', filename='css2/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{url_for('.static', filename='css2/style.css')}}" rel="stylesheet">
+    <style>
+            .custom-card {
+                border-radius: 10px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                margin: 10px;
+                padding: 20px;
+                display: inline-block;
+                width: 25%;
+                background-color: #e9ecef;
+                transition: box-shadow 0.2s ease-in-out;
+                text-align: center;
+            }
+
+            .custom-card:hover {
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+                transform: translateY(-2px);
+            }
+
+            .custom-card h2 {
+                margin-top: 0px;
+                margin-bottom: 10px;
+                font-size: 24px;
+                color: #343a40;
+            }
+
+            .custom-card p {
+                margin-top: 0px;
+                color: #6c757d;
+            }
+
+            .custom-card a {
+                display: inline-block;
+                margin-top: 10px;
+                padding: 8px 16px;
+                border-radius: 5px;
+                text-decoration: none;
+                transition: background-color 0.2s ease-in-out;
+            }
+
+            .custom-card:nth-child(4n+1) {
+                clear: left;
+            }
+            </style>
+</head>
+
+<body>
+        <!-- Navbar & Hero Start -->
+            {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                    <div class="alert alert-success" role="alert">{{ messages[0] }}</div>
+            </ul>
+        {% endif %}
+    {% endwith %}
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+                <a href="" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"><i class="fa fa-plane-departure me-3"></i>Fly Me Now</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="{{ url_for('hello_world') }}" class="nav-item nav-link active">Vols</a>
+                        {% if session['username'] %}
+                        <a href="{{ url_for('my_tickets') }}" class="nav-item nav-link">Mes tickets</a>
+                        {% endif %}
+                    </div>
+                    {% if session['username'] %}
+                        <a href="{{ url_for('logout') }} " class="btn btn-primary py-2 px-4">Se déconnecter</a>
+                    {% else %}
+                            <a href="{{ url_for('signup') }}" class="btn btn-primary py-2 px-4" style="margin-right: 20px">S'inscrire</a>
+                            <a href="{{ url_for('login') }}" class="btn btn-primary py-2 px-4">Se connecter</a>
+                    {% endif %}
+                </div>
+            </nav>
+
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Vols</h1>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+        {% for flight in flights %}
+        <div class="custom-card" >
+         <div class="d-inline-block bg-primary text-white fs-5 py-1 px-4 mb-4">{{ flight.airline }}</div>
+         <h5 class="mb-3">{{ flight.departure_country }} --> {{ flight.arrival_country }}</h5>
+         <p>À partir de {{ flight.economy_class_ticket_price }} DT</p>
+         <ol class="breadcrumb justify-content-center mb-0">
+             <li class="breadcrumb-item small"><i class="fa fa-calendar-alt text-primary me-2"></i>{{ flight.departure_date.strftime('%Y/%m/%d')}}</li>
+         </ol>
+            <a href="{{ url_for('details_flight', id=flight.id) }}">Détails</a>
+            {% if session["username"] %}
+                <a href="{{ url_for('book_flight', id=flight.id) }}">Réserver</a>
+            {% endif %}
+         </div></div>
+        {% else %}
+              <p>no records found</p>
+        {% endfor %}
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-4">
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Esprit</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+216 21 974 414</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>flymenow@gmail.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Horaire</h4>
+                        <h5 class="text-light fw-normal">Lundi - Samedi</h5>
+                        <p>09:00 - 21:00</p>
+                        <h5 class="text-light fw-normal">Dimanche</h5>
+                        <p>10:00 - 20:00</p>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">À propos</h4>
+                        <p>Notre agence de voyage tunisienne est dédiée à fournir à nos clients une expérience de voyage inoubliable.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a class="border-bottom" href="#">Fly Me Now</a>, All Right Reserved.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{url_for('.static', filename='s2/main.js')}}j"></script>
+</body>
+
+</html>
